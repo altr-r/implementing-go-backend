@@ -6,14 +6,18 @@ import (
 
 	"github.com/altr-r/implementing-go-backend/global_router"
 	"github.com/altr-r/implementing-go-backend/handlers"
+	"github.com/altr-r/implementing-go-backend/middleware"
 )
 
 func Serve() {
 	mux := http.NewServeMux()
 
-	mux.Handle("GET /products", http.HandlerFunc(handlers.GetProducts))
-	mux.Handle("POST /products", http.HandlerFunc(handlers.CreateProduct))
-mux.Handle("GET /products/{id}", http.HandlerFunc(handlers.GetProductByID))
+	manager := middleware.NewManager()
+
+
+	mux.Handle("GET /products", manager.With(http.HandlerFunc(handlers.GetProducts), middleware.Logger))
+	mux.Handle("POST /products", manager.With(http.HandlerFunc(handlers.CreateProduct), middleware.Logger))
+	mux.Handle("GET /products/{id}", manager.With(http.HandlerFunc(handlers.GetProductByID), middleware.Logger))
 
 	globalMux := global_router.GlobalRouter(mux)
 	fmt.Println("Server running on port :8080")
