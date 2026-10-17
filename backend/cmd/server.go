@@ -14,6 +14,7 @@ func Serve() {
 
 	manager := middleware.NewManager()
 
+	manager.Use(middleware.Logger)
 
 	mux.Handle("GET /products", manager.With(http.HandlerFunc(handlers.GetProducts), middleware.Logger))
 	mux.Handle("POST /products", manager.With(http.HandlerFunc(handlers.CreateProduct), middleware.Logger))
