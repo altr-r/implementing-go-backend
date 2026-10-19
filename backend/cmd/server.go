@@ -12,11 +12,12 @@ func Serve() {
 
 	manager := middleware.NewManager()
 
-	manager.Use(middleware.Logger, middleware.CorsWithPreflight)
+	manager.Use(middleware.Preflight, middleware.Cors, middleware.Logger)
+
+	wrappedMux := manager.WrapMux(mux)
 
 	initRoutes(mux, manager)
 
-	wrappedMux := manager.WrapMux(mux)
 	fmt.Println("Server running on port :8080")
 	err := http.ListenAndServe(":8080", wrappedMux)
 

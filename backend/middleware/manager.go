@@ -28,7 +28,7 @@ func (mngr *Manager) Use(middlewares ...Middleware) {
 	mngr.globalMiddlewares = append(mngr.globalMiddlewares, middlewares...)
 }
 
-func (mngr *Manager) WrapMux(next http.Handler, middlewares ...Middleware) http.Handler {
+func (mngr *Manager) WrapMux(next http.Handler) http.Handler {
 	nextToPass := next
 
 	for _, middleware := range mngr.globalMiddlewares {
@@ -36,5 +36,3 @@ func (mngr *Manager) WrapMux(next http.Handler, middlewares ...Middleware) http.
 	}
 	return nextToPass
 }
-
-
