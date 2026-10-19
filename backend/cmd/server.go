@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/altr-r/implementing-go-backend/global_router"
 	"github.com/altr-r/implementing-go-backend/middleware"
 )
 
@@ -13,16 +12,15 @@ func Serve() {
 
 	manager := middleware.NewManager()
 
-	manager.Use(middleware.Logger)
+	manager.Use(middleware.Logger, middleware.CorsWithPreflight)
 
 	initRoutes(mux, manager)
 
-	globalMux := global_router.GlobalRouter(mux)
+	wrappedMux := manager.WrapMux(mux)
 	fmt.Println("Server running on port :8080")
-	err := http.ListenAndServe(":8080", globalMux)
+	err := http.ListenAndServe(":8080", wrappedMux)
 
 	if err != nil {
 		fmt.Println("There was an error starting the server")
 	}
-
 }
