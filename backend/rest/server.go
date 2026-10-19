@@ -1,4 +1,4 @@
-package cmd
+package rest
 
 import (
 	"fmt"
@@ -7,12 +7,10 @@ import (
 	"strconv"
 
 	"github.com/altr-r/implementing-go-backend/config"
-	"github.com/altr-r/implementing-go-backend/middleware"
+	middleware "github.com/altr-r/implementing-go-backend/rest/middlewares"
 )
 
-func Serve() {
-	cnf := config.GetConfig()
-
+func Start(cnf config.Config) {
 	manager := middleware.NewManager()
 	manager.Use(middleware.Preflight, middleware.Cors, middleware.Logger)
 

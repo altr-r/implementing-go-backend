@@ -1,10 +1,10 @@
-package cmd
+package rest
 
 import (
 	"net/http"
 
-	"github.com/altr-r/implementing-go-backend/handlers"
-	"github.com/altr-r/implementing-go-backend/middleware"
+	"github.com/altr-r/implementing-go-backend/rest/handlers"
+	middleware "github.com/altr-r/implementing-go-backend/rest/middlewares"
 )
 
 func initRoutes(mux *http.ServeMux, manager *middleware.Manager) {
