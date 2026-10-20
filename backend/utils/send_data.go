@@ -11,3 +11,10 @@ func SendData(w http.ResponseWriter, data any, statusCode int) {
 	encoder.Encode(data)
 
 }
+
+func SendError(w http.ResponseWriter, msg string, statusCode int) {
+	w.WriteHeader(statusCode)
+
+	encoder := json.NewEncoder(w)
+	encoder.Encode(msg)
+}

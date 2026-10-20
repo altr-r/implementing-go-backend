@@ -22,8 +22,7 @@ func CreateProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	newProduct.Id = len(database.Products) + 1
+	createdProduct := database.StoreProducts(newProduct)
 
-	database.Products = append(database.Products, newProduct)
-	utils.SendData(w, database.Products, 201)
+	utils.SendData(w, createdProduct, 201)
 }
