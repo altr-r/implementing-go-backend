@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/altr-r/implementing-go-backend/config"
 	"github.com/altr-r/implementing-go-backend/database"
 	"github.com/altr-r/implementing-go-backend/utils"
 )
@@ -33,5 +34,20 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	utils.SendData(w, user, http.StatusCreated)
+	cnf := config.GetConfig()
+
+	accessToken, err := utils.CreateJwt(cnf.JwtSecretKey, utils.Payload{
+		Sub:       user.ID,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		Email:     user.Email,
+	})
+
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		fmt.Println(err)
+		return
+	}
+
+	utils.SendData(w, accessToken, http.StatusCreated)
 }
