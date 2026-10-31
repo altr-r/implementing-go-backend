@@ -1,4 +1,4 @@
-package handlers
+package product
 
 import (
 	"encoding/json"
@@ -10,7 +10,7 @@ import (
 	"github.com/altr-r/implementing-go-backend/utils"
 )
 
-func UpdateProduct(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) UpdateProduct(w http.ResponseWriter, r *http.Request) {
 	productId := r.PathValue("id")
 
 	pid, err := strconv.Atoi(productId)

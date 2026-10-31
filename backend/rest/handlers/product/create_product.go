@@ -1,4 +1,4 @@
-package handlers
+package product
 
 import (
 	"encoding/json"
@@ -9,8 +9,7 @@ import (
 	"github.com/altr-r/implementing-go-backend/utils"
 )
 
-func CreateProduct(w http.ResponseWriter, r *http.Request) {
-	
+func (h *Handler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 
 	var newProduct database.Product
 
